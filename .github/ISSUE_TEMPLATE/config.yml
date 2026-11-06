@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security problem
+    url: https://dynohash.com/security/
+    about: Please do not post it here. Email security@dynohash.com.
+  - name: Found a fake?
+    url: https://dynohash.com/spot-a-fake/
+    about: How to tell. Send the link or file name to support@dynohash.com.
+  - name: Questions and help
+    url: https://dynohash.com/
+    about: Email support@dynohash.com.

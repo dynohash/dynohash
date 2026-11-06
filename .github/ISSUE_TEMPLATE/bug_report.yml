@@ -1,0 +1,112 @@
+name: Bug report
+description: Something went wrong with DynoHash.
+title: "Bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for telling us. Short answers are fine.
+
+        **Security problem?** Do not post it here. Email security@dynohash.com.
+
+  - type: input
+    id: card
+    attributes:
+      label: Card model
+      description: More than one card? List them all.
+      placeholder: AMD Radeon AI PRO R9700
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows 11
+        - Windows 10
+        - Ubuntu 24.04
+        - Other Linux
+        - HiveOS
+        - mmpOS
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: driver
+    attributes:
+      label: Driver version
+      description: AMD Adrenalin or ROCm version, or the NVIDIA driver version.
+      placeholder: "25.10.2"
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: DynoHash version
+      description: In the app, open About. On the command line, run `dynohash --version`.
+      placeholder: dynohash 0.1.0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: package
+    attributes:
+      label: Which download?
+      options:
+        - Windows installer
+        - Windows command line (zip)
+        - Linux .deb
+        - Linux AppImage
+        - Linux command line (tar.gz)
+        - HiveOS package
+        - mmpOS package
+    validations:
+      required: true
+
+  - type: input
+    id: pool
+    attributes:
+      label: Pool
+      description: The pool address only. Not your wallet. Not your password.
+      placeholder: stratum+ssl://prl-us.kryptex.network:8048
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you expect? What did you get?
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: How do we see it too?
+      placeholder: |
+        1.
+        2.
+        3.
+
+  - type: textarea
+    id: log
+    attributes:
+      label: Log excerpt
+      description: |
+        Paste the lines around the problem. App: the Logs tab. HiveOS: `/var/log/miner/dynohash/dynohash.log`.
+
+        **Remove your wallet address, pool password and computer name first. This page is public.**
+      render: text
+
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Before you post
+      options:
+        - label: I removed my wallet address and passwords from everything above.
+          required: true
