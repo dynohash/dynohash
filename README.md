@@ -13,9 +13,9 @@ DynoHash mines Pearl (PRL) on your graphics card, then tunes the card for more s
 - **The Strip.** Real speeds from real rigs, card by card. [See The Strip](https://dynohash.com/the-strip/)
 - **Plug and play.** Install it. Choose where to get paid. Press **Start mining**.
 
-On our test rig it out-mined every other Pearl miner we tried, then auto-tune added more.
+On our own R9700 it went from 106 TH/s at our first build to 142 TH/s tuned today. On an RTX 2080, from about 41 to about 69 TH/s.
 
-<p align="center"><img src=".github/assets/time-slip.png" width="340" alt="Time slip for the AMD Radeon AI PRO R9700 on Pearl: 118 TH/s stock-tuned, up to 124 TH/s auto-tuned. Measured on our own R9700."></p>
+<p align="center"><img src=".github/assets/time-slip.png" width="340" alt="Time slip for the AMD Radeon AI PRO R9700 on Pearl: 135 TH/s stock-tuned, up to 142 TH/s auto-tuned. Measured on our own R9700."></p>
 
 ## Download
 
@@ -102,6 +102,8 @@ Make a flight sheet. Pick **Custom** as the miner, then **Setup Miner Config**:
 - **Wallet and worker template:** `%WAL%.%WORKER_NAME%`
 - **Pool URL:** `stratum+ssl://prl-us.kryptex.network:8048`
 - **Pass:** only if your pool wants one.
+
+Tested pools: Kryptex, HeroMiners and K1Pool. Addresses and copy-ready settings: [dynohash.com/download/#pools](https://dynohash.com/download/#pools).
 - **Extra config arguments:** optional, see [below](#extra-arguments-for-rigs).
 
 Your wallet goes into a private file on the rig, never onto the command line.
@@ -165,11 +167,13 @@ A check failed? Delete the file. Tell us: security@dynohash.com
 - **AMD Radeon AI PRO R9700** (gfx1201)
 - **AMD Radeon RX 9000 series** (RDNA 4)
 - **AMD Radeon RX 7000 series** (RDNA 3), including built-in Radeon 780M graphics
-- **AMD Radeon RX 6000 series** (RDNA 2)
-- **NVIDIA GeForce RTX 50, 40, 30 and 20 series**
+- **NVIDIA GeForce RTX 20 series** (tested on an RTX 2080)
 - **NVIDIA GTX 10 series.** Works, but too slow to pay on Pearl.
 
-Speed on our own R9700: 118 TH/s stock-tuned, up to 124 with auto-tune.
+More cards are being tested. Got another card? Try the [beta](https://dynohash.com/download/) and post your time slip.
+
+Speed on our own R9700: 135 TH/s stock, up to 142 TH/s tuned at 300 W (DynoHash 0.1.2). Release 0.1.1 on Windows 11: 130 TH/s stock.
+On our RTX 2080: about 69 TH/s at about 240 W.
 
 Got a card that does not start, or a HiveOS or mmpOS rig? DynoHash checks every card the first time it runs
 (see [card checks](#speed-stats-and-card-checks)). You can also [tell us how it runs](https://github.com/dynohash/dynohash/issues/new?template=card_test.yml).
@@ -221,7 +225,14 @@ it runs its own correctness check (the card's result against a CPU result) and a
 
 Never sent: wallet, pool, worker name, IP address, computer name or paths. At most 20 checks per install per day.
 Kept 90 days. It never slows mining. The app's **View what's sent** button shows the last check.
-Off with the same switch: `--stats off`. The exact format is
+Off with the same switch: `--stats off`.
+
+**Coin rate.** Whether speed stats are on or off, the app reads the current coin rate from api.dynohash.com about once an hour
+and before each dyno pull, to show what your rig earns a day. That request sends nothing about you (no install ID, wallet, card
+or settings); like any web request it shows our server your IP address, and it names the DynoHash version.
+
+**Problem reports.** "Report a problem" builds a report on your PC, cleans out wallets, logins, names and addresses, and shows it
+to you first. Only you send it. The exact format is
 [the published schema](https://dynohash.com/stats-schema/cardcheck-v1.json).
 
 <details>
