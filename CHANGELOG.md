@@ -3,6 +3,20 @@
 Every release is listed here, newest first.
 Downloads are in the [README](README.md#download) and on the [releases page](https://github.com/dynohash/dynohash/releases).
 
+## 0.1.2 (2026-11-08)
+
+- **Much faster on NVIDIA RTX 30, 40 and 50:** new default kernels for these cards. On our test cards: RTX 3080 about +48%, RTX 4070 SUPER +21%, RTX 4090 +22%, RTX 5080 +24% (204 vs 165 TH/s at 360 W).
+- **11 new pools in the pool list:** 2Miners, AlphaPool, PearlFortune, LuckyPool, JetskiPool, Minerlab, Rabid Pool, Linkrra, Skypool, Suprnova and Rellik Pool, beside Kryptex, HeroMiners and K1Pool. DynoHash still never picks a pool for you.
+- **Plain proofs for pools that do not use compressed ones.** A pool that does not confirm gzip proofs now gets plain proofs instead of being refused, so pools such as Suprnova work. Every share is still checked on your CPU before it is sent.
+- **Pools that want the login first** (AlphaPool) now connect: DynoHash reconnects and sends the login before anything else.
+- **One payout line per pool** in the pool picker, taken from the pool's own page. Pool fees are no longer shown; each pool's page has them.
+- **Track has no fan limit now:** it goes for the most profit, and your temperature limit still protects the card. Street keeps its 65% fan limit. A Track level you never edited drops the old 80% limit; a fan limit you set yourself is kept.
+- **The dyno chart's power axis reads low to high** (70, 80, 90, 100, 110). Stock is still measured first.
+- **New AMD kernels:** the Radeon AI PRO R9700 runs a persistent-workgroup kernel, and the Radeon 780M a wider RDNA3 kernel.
+- **The dyno pull ranks Street and Track at the voltage offset they actually run at**, not at stock voltage.
+- **Windows Defender help:** dynohash.exe now names its publisher and version in Properties > Details. If Defender flags it anyway, [here is what to do](https://github.com/dynohash/dynohash/blob/main/DEFENDER.md).
+- Card checks now tell a crash from a wrong answer. Fixes and more fuzz testing of what the miner reads from pools and servers.
+
 ## 0.1.1 (2026-11-07)
 
 - **The levels have new names and jobs.** Street is quiet (fan up to 65%, tuned for efficiency). Track is the default:

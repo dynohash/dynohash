@@ -47,7 +47,8 @@ Every file has a signature: the same link with `.minisig` on the end. All files 
 2. [Verify it](#verify-your-download).
 3. Run it. It needs no admin rights.<br>
    Windows may warn you, because the file is not code-signed. If step 2 passed, click **More info**, then **Run anyway**.
-4. Open DynoHash. Choose where to get paid. Press **Start mining**.
+4. Open DynoHash. Choose where to get paid. Press **Start mining**.<br>
+   If Windows Defender removes it, see [If Windows Defender flags DynoHash](DEFENDER.md).
 5. Open **Dyno** and press **Start the dyno pull**. It takes a few minutes.
 
 **Command line instead?**
@@ -103,7 +104,7 @@ Make a flight sheet. Pick **Custom** as the miner, then **Setup Miner Config**:
 - **Pool URL:** `stratum+ssl://prl-us.kryptex.network:8048`
 - **Pass:** only if your pool wants one.
 
-Tested pools: Kryptex, HeroMiners and K1Pool. Addresses and copy-ready settings: [dynohash.com/download/#pools](https://dynohash.com/download/#pools).
+Tested pools: Kryptex, HeroMiners, K1Pool, 2Miners, AlphaPool, PearlFortune, LuckyPool, JetskiPool, Minerlab, Rabid Pool, Linkrra, Skypool, Suprnova and Rellik Pool. Addresses and copy-ready settings: [dynohash.com/download/#pools](https://dynohash.com/download/#pools).
 - **Extra config arguments:** optional, see [below](#extra-arguments-for-rigs).
 
 Your wallet goes into a private file on the rig, never onto the command line.
@@ -258,10 +259,10 @@ Sent over HTTPS to `api.dynohash.com` only. The server accepts only the fields i
 - It tests the card's power limit, voltage and work size.
 - It keeps only settings where every share passes a check on your CPU.
 - It saves the result for that card and that driver. A new driver needs a new dyno pull.
-- It goes at most 60 mV below stock (90 mV on the Track preset).
-- While you mine, it backs off at the first error. After 24 clean hours it tries one small step deeper, never past 90 mV.
+- It searches the core voltage until a step fails or gains under 0.5%, then backs off two notches.
+- While you mine, it backs off at the first error. After 24 clean hours it tries one small step deeper, never past what the dyno pull proved.
 - When DynoHash stops, your card goes back to stock.
-- **Presets:** Street (quiet, fan up to 65%), Strip (balanced, fan up to 80%, the default), Track (no fan cap).
+- **Levels:** Street (quiet, fan up to 65%), Track (the default: the most profit, no fan limit; your temperature limit still protects the card), Nitrous (the most stable power after tuning, no fan cap).
 - On Linux, card tuning needs root rights. Without them DynoHash mines at stock settings.
 
 Stop DynoHash with **Stop mining**, Ctrl+C or `dynohash stop`. If it was force-closed, the next start puts the card back first.
@@ -298,6 +299,7 @@ Stop DynoHash with **Stop mining**, Ctrl+C or `dynohash stop`. If it was force-c
 
 ## Help
 
+- Windows Defender flagged DynoHash? [What to do](DEFENDER.md).
 - Something broke? [Report a bug](https://github.com/dynohash/dynohash/issues/new?template=bug_report.yml).
 - Tested a card? [Share your numbers](https://github.com/dynohash/dynohash/issues/new?template=card_test.yml).
 - Anything else: support@dynohash.com
