@@ -3,6 +3,24 @@
 Every release is listed here, newest first.
 Downloads are in the [README](README.md#download) and on the [releases page](https://github.com/dynohash/dynohash/releases).
 
+## 0.1.5 (2026-11-09)
+
+- **NOCK merge mining:** add your Nockchain address (`--merge-nock`, or Settings, NOCK address) and the pools that pay NOCK
+  too give it for the same work, with nothing slowed down: Pearlhash and LuckyPool through the login, Rellik Pool through its
+  merge extension. Any other pool gets your Pearl wallet only, and the log says so. The NOCK address is guarded like your
+  wallet. The dev fee never uses it.
+- **Backup pools** use the same pool and server picker as the main pool (or a custom address). The confirm screen names
+  each pool and server. A backup that will refuse your account (a Kryptex username on a non-Kryptex pool) is pointed out.
+- **Failover:** a pool that stops sending work is left after 60 s, not after 3 minutes.
+- **HiveOS:** a Hive power limit added after the first start is respected. A payout-guard stop shows a message on the
+  dashboard instead of a restart loop. **mmpOS:** TLS is kept, stats work on any Api port, and `--autotune` is the quick pull.
+- **Two Windows users on one PC:** uninstalling for one user no longer removes the helper another user's DynoHash uses.
+  The app offers to repair a missing helper.
+- **Speed stats** are sent every hour. `--stats off` turns off card checks too.
+- **Crash logs:** a driver error on a card DynoHash is not mining on (a disabled card, or one another program uses) is noted
+  in the log but no longer counts as a DynoHash crash.
+- The Example rig shows the real version and says its numbers are example data. The quick dyno pull says about 10 minutes.
+
 ## 0.1.5-beta.1 (beta, 2026-11-09)
 
 Everything in 0.1.4, plus:
