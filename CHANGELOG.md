@@ -3,6 +3,17 @@
 Every release is listed here, newest first.
 Downloads are in the [README](README.md#download) and on the [releases page](https://github.com/dynohash/dynohash/releases).
 
+## 0.1.3 (2026-11-09)
+
+- **NVIDIA tuning:** the dyno pull now tunes NVIDIA cards too: power limit and core clock boost, every share still checked on your CPU. On our RTX 2080 a pull as a normal Windows user went from 47.9 TH/s at stock to 61.5 TH/s at 171 W. On Windows a small DynoHash Helper service (installed once, with one admin prompt) sets the clocks and power for your account only.
+- **Faster NVIDIA kernels:** new defaults for RTX 30, 40 and 50 (on our test cards an RTX 4090 at 450 W does about 296 TH/s, an RTX 5090 at 575 W about 360) and a faster GTX 10 kernel. GTX 10 cards get the clock boost only if the card accepts it; otherwise power limit only.
+- **Watchdog:** if the miner stops answering, DynoHash restarts it; if the app and the miner are both gone, the helper starts the app again. A card that keeps failing is stepped back and then mined at stock. Optional: restart the PC when a card falls off the bus (off by default, at most 3 times a day). On HiveOS, Hive's own watchdog stays in charge.
+- **Tune all cards:** one button on the Dyno screen tunes each card in turn while the others keep mining.
+- **Built-in GPUs and cards DynoHash cannot control:** listed on the Dyno screen with the reason, and a kernel check finds their fastest kernel without changing any settings. NVIDIA cards show watts, temperatures, fan and clocks on Linux and Windows.
+- **HiveOS:** the AMD runtime is in the package, so AMD rigs need nothing extra; the AMD warning shows only on AMD rigs. Hive's overclock is a ceiling the tune stays under and comes back when DynoHash stops, also after a crash. The first autotune is the quick pull and shows its speed in Hive.
+- **Diagnostic logging and crash logs** from the 0.1.2 betas: Settings > Diagnostic logging (Normal by default), `diag-bundle` makes one cleaned zip of the logs to send us, and "Send crash logs to help fix problems" is off unless you turn it on.
+- Windows Defender sometimes flags a new miner build. If it does, [here is what to do](https://github.com/dynohash/dynohash/blob/main/DEFENDER.md).
+
 ## 0.1.2-beta.3 (beta, 2026-11-08)
 
 Everything in 0.1.2-beta.2, plus:
