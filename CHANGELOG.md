@@ -3,6 +3,15 @@
 Every release is listed here, newest first.
 Downloads are in the [README](README.md#download) and on the [releases page](https://github.com/dynohash/dynohash/releases).
 
+## 0.1.4 (2026-11-09)
+
+- **Backup pools:** add backup pools in Settings (or `--backup-pool` on the command line). If your pool gives no work (3 failed connections in a row, or no job for 60 s), DynoHash mines on the next one with the same account and worker, and goes back when your pool answers again. Your pool's other regional servers are added on their own (`--no-regional-backup` turns that off). The Run screen shows which server is in use. HiveOS: extra Pool URL lines in the flight sheet are backups; mmpOS: a repeated pool is a backup.
+- **Payout guard** covers the backup pools you name, the same way as your main pool.
+- **More NVIDIA cards:** GTX 16 series, CMP 30HX, T400-T2000 and Tesla V100 now mine with a DP4A kernel (in our tests a GTX 1660 Ti does about 8.7 TH/s, a V100 about 26). Faster defaults for the CMP 170HX and A100 and for the H100.
+- **CMP 170HX:** a card that looks locked gets one line in the log and a note on its card in the app, with a link to the [unlock guide](https://dynohash.com/guides/cmp-170hx/). DynoHash does not unlock cards.
+- **Dev fee:** if a fee server gives no work, the fee connects to another one (Kryptex's other servers, then HeroMiners), and your cards mine for you while it waits instead of sitting idle. The fee itself is unchanged.
+- **Crash logs:** a computer or user name that appears several times in a row is now always removed from a log before it is sent (it could slip through once).
+
 ## 0.1.3 (2026-11-09)
 
 - **NVIDIA tuning:** the dyno pull now tunes NVIDIA cards too: power limit and core clock boost, every share still checked on your CPU. On our RTX 2080 a pull as a normal Windows user went from 47.9 TH/s at stock to 61.5 TH/s at 171 W. On Windows a small DynoHash Helper service (installed once, with one admin prompt) sets the clocks and power for your account only.
