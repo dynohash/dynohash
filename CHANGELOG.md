@@ -3,6 +3,18 @@
 Every release is listed here, newest first.
 Downloads are in the [README](README.md#download) and on the [releases page](https://github.com/dynohash/dynohash/releases).
 
+## 0.1.2-beta.3 (beta, 2026-11-08)
+
+Everything in 0.1.2-beta.2, plus:
+
+- **NVIDIA tuning:** the dyno pull now tunes NVIDIA cards too: power limit and core clock boost, every share still checked on your CPU. On our RTX 2080 a normal-user Windows pull went from 47.9 TH/s at stock to 61.5 TH/s at 171 W. On Windows a small DynoHash Helper service (installed once, with one admin prompt) sets the clocks and power for your account only; nothing else can use it.
+- **Watchdog:** if the miner stops answering, DynoHash restarts it; if the app and the miner are both gone, the helper starts the app again. A card that keeps failing is stepped back and then mined at stock. Optional: restart the PC when a card falls off the bus (off by default, at most 3 times a day). On HiveOS, Hive's own watchdog stays in charge.
+- **Tune all cards:** one button on the Dyno screen tunes each card in turn while the others keep mining.
+- **Built-in GPUs and cards DynoHash cannot control:** listed on the Dyno screen with the reason, and a kernel check finds their fastest kernel without changing any settings. NVIDIA cards show watts, temperatures, fan and clocks on Linux and Windows.
+- **Faster kernels:** new defaults for RTX 30, 40 and 50 and a faster GTX 10 kernel (a GTX 1080 Ti went from 12.2 to 15.7 TH/s at 250 W in our test). GTX 10 cards get the clock boost only if the card accepts it; otherwise power limit only.
+- **HiveOS (in the next release's HiveOS package; a beta has none):** the AMD runtime is in the package, so AMD rigs need nothing extra; the AMD warning shows only on AMD rigs. Hive's overclock is a ceiling the tune stays under and comes back when DynoHash stops, also after a crash. The first autotune is the quick pull and shows its speed in Hive.
+- Beta error reports now carry each card's own shares and clocks.
+
 ## 0.1.2-beta.2 (beta, 2026-11-08)
 
 Same as 0.1.2 with extra logging to help us fix problems; sends error reports, never your wallet.
