@@ -3,6 +3,19 @@
 Every release is listed here, newest first.
 Downloads are in the [README](README.md#download) and on the [releases page](https://github.com/dynohash/dynohash/releases).
 
+## 0.1.2-beta.2 (beta, 2026-11-08)
+
+Same as 0.1.2 with extra logging to help us fix problems; sends error reports, never your wallet.
+
+- **Faster on RTX 50 and RTX 40:** new default kernels. An RTX 5080 at its stock 360 W did about 207 TH/s in our test.
+- **Diagnostic logging (on in the beta):** card readings, GPU driver and PCIe errors and the miner's log, kept on your PC.
+  Settings > Diagnostic logging: Normal, Full (much more detail, at most about 2 GB on disk) or Off.
+- **`diag-bundle`** makes one zip of those logs to email us, cleaned first: no wallet, pool login or password, user or
+  computer name, or IP address.
+- **Send crash logs to help fix problems** (Settings, off unless you turn it on): when a card crashes or hangs, that cleaned
+  log is sent to us, at most 3 a day, stored privately and deleted after 30 days.
+- The beta's error reports and speed stats work as in 0.1.2-beta.1.
+
 ## 0.1.2 (2026-11-08)
 
 - **Much faster on NVIDIA RTX 30, 40 and 50:** new default kernels for these cards. On our test cards: RTX 3080 about +48%, RTX 4070 SUPER +21%, RTX 4090 +22%, RTX 5080 +24% (204 vs 165 TH/s at 360 W).
