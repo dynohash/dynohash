@@ -3,6 +3,30 @@
 Every release is listed here, newest first.
 Downloads are in the [README](README.md#download) and on the [releases page](https://github.com/dynohash/dynohash/releases).
 
+## 0.1.6 (2026-11-11)
+
+- **NOCK on Rellik Pool now pays.** 0.1.5 earned Pearl there but no NOCK, because that pool credits NOCK only for its own
+  proof shape. With a NOCK address set, a card that has the kernel for it now mines that shape by itself: NVIDIA RTX 20 to
+  RTX 50 and AMD RX 9000 (not the GTX 16 cards). It needs about 5 GB of free card memory; a card with less, or one that
+  cannot start at that shape, mines Pearl at its own shape there, and the log and the status say so. The shape is chosen at
+  start and kept for the run. It is slower on some cards than our own: about 12% on AMD (one R9700), and RTX 3080 / 3090
+  mine it without their new kernel.
+- **RTX 3080 and 3090 (and their Ti models): a new kernel.** It builds its work on the chip and moves almost nothing through
+  card memory (0.3 GB on the card, 3 GB before). Same speed at the stock power limit, faster under any lower one. RTX 3090:
+  +4% at 300 W, +9% at 280 W, +23% at 250 W. RTX 3080: +1 to 2% at 250-280 W, +9% at 220 W (one card of each, every share
+  checked). Nothing to set: these cards use it by themselves. Other cards keep their kernel; a saved dyno pull's kernel pick
+  is made again once.
+- **Pearlhash is no longer in the NOCK pool list.** Its servers refuse the standard mining login, so DynoHash cannot
+  mine there.
+- **F2Pool** is in the pool list (log in with your F2Pool account name). A backup pool that will refuse your login (a wallet
+  on F2Pool, an F2Pool account name elsewhere) is pointed out at start.
+- **Fewer reconnects:** a healthy pool is no longer dropped between two jobs. A silent pool is now left after 10 minutes,
+  not 60 seconds (0.1.5 lost 2 to 4% of mining time to needless reconnects).
+- **Shorter pause at a job change:** the work for a new job is prepared 4 to 5 times faster and while the cards finish the
+  pass in flight.
+- **Less memory:** at the Rellik NOCK shape the miner keeps about 0.2 GB of system memory per card instead of 4.4 GB, and
+  AMD cards use about 4.5 GB of card memory instead of 9.5 GB.
+
 ## 0.1.5 (2026-11-09)
 
 - **NOCK merge mining:** add your Nockchain address (`--merge-nock`, or Settings, NOCK address) and the pools that pay NOCK
