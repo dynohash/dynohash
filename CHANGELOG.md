@@ -3,6 +3,121 @@
 Every release is listed here, newest first.
 Downloads are in the [README](README.md#download) and on the [releases page](https://github.com/dynohash/dynohash/releases).
 
+## 0.1.8 (2026-11-15)
+
+0.1.8 also carries everything that was ready for 0.1.7, which was not released on its own.
+
+- **Press Start and it mines, within seconds.** DynoHash no longer tests kernels or runs a dyno pull before the first share
+  (on a first start that took about 10 minutes, behind a screen that only said it was loading). Each card has one kernel in
+  this release, the fastest we measured for its model, and nothing tries or picks another. A card you have not tuned mines on
+  DynoHash's default tune for its model: that kernel at the card's own power limit, with no clock or voltage changes. The
+  dyno pull is the one button for tuning and never starts by itself: the quick pull takes about 6 minutes a card (measured on
+  NVIDIA cards) and the full pull about 30 minutes or more; it no longer tests kernels or
+  takes a separate stock reading first: it goes through the power steps from the lowest up. On the command line, `dynohash mine`
+  uses a saved tune without `--autotune`; `--autotune` still tunes a card that has no tune before it mines, and `--no-tune`
+  leaves every card alone.
+- **After updating from 0.1.6, run one dyno pull.** A 0.1.6 tune was made on older kernels, so 0.1.8 keeps it in the file but
+  does not use it: the card mines on the default tune (on an RTX 5080 that is faster anyway: 236 TH/s at 360 W against 221
+  TH/s at 378 W), the Run screen says so, and the Dyno screen marks the old tune. One dyno pull (`dynohash tune` on a command
+  line or HiveOS) tunes the card for 0.1.8. The same will happen after a later update that changes a card family's kernels:
+  a saved tune belongs to the kernels it was made on.
+- **The undervolt never goes deeper on its own.** While it mines, DynoHash still steps a card's undervolt back at the first
+  error, but it no longer tries a deeper voltage after a day without errors: only a dyno pull you start does that.
+- **Hot-spot limit 110 °C on a new install** (it was 100 °C). AMD cards protect themselves at about 110 °C; at 100 °C a
+  Radeon AI PRO R9700 was held to its stock power (about 130 TH/s, against 140 TH/s with 110 °C). An installed DynoHash keeps
+  the limit it has (the Run screen's Fan and power panel, Hot spot). NVIDIA cards report no hot spot, so nothing changes there.
+- **Cards with nearly all their memory in use.** The new NVIDIA kernels need only about 0.2 GB of card memory, so an 8 GB
+  card that also drives your desktop keeps its fast kernel. If other programs hold nearly all of a card's memory, that card
+  mines on a kernel that fits what is left, at the card's own settings, and the Run screen says so; close them and restart
+  mining for the faster one.
+- **A card whose start-up check takes the PC down is stopped.** If that happens twice in a row, DynoHash stops starting that
+  card and says what to send to support, until a DynoHash update changes its kernel or a driver update brings a new CUDA
+  (AMD: HIP) version.
+- **Faster on NVIDIA RTX 50 cards (every one we measured).** Two new kernels since 0.1.6 build their work on the chip and move almost nothing
+  through card memory; 0.1.8's own kernel also keeps everything in registers. Each card at its own power limit, every share
+  checked: first new kernel against 0.1.6, then 0.1.8's kernel on top of it: RTX 5090 +17% (575 W), then +5.0% (500 W);
+  RTX 5080 +4% (360 W) / +7% (280 W), then +2.0% (360 W); RTX 5070 Ti +7% (300 W), then +3.3% (250 W); RTX 5070 +0.3%,
+  then +2.0 to +2.8% (250 W); RTX 5060 Ti +5%, then +2.0% (180 W); RTX 5060 +2% (145 W). RTX PRO 4000 Blackwell: +21% from
+  0.1.6 to 0.1.8 (145 W). 0.1.8's kernel also uses 3 to 7% less power for the same work.
+- **Faster on RTX 40: the new kernel is now their default.** RTX 4090 +5%, RTX 4080 +19% (at a 224 W limit), RTX 4070 Ti
+  +1%, RTX 4070 +4%, RTX 4060 Ti +4%, RTX 4060 +3%, each at its own power limit.
+- **RTX 3080, 3080 Ti and 3090: +7 to +8%** on top of 0.1.6 (3090 and 3080 Ti at 350 W, 3080 at a 300 W limit).
+- **RTX 3080 / 3090 and RTX 40: a faster kernel on top of those two, now their default.** RTX 4090 +2.2% (450 W and 350 W),
+  RTX 4070 +2.2% (200 W), RTX 3090 +1.9% (350 W and 280 W), RTX 3080 +3.3% (a heat-limited card), and 1 to 2% less power
+  for the same work.
+- **CMP 170HX and A100: a new default kernel.** CMP 170HX 64 GB +5.1% (+4.4% in a second, longer test), CMP 170HX 40 GB
+  +10.2%, A100 PCIe 40 GB +19.4%, each at its host's 250 W limit, and more work per watt (1.5 times on the CMP 170HX 64 GB,
+  about 1.2 times on the others).
+- **RTX 3060, 3060 Ti, 3070, 3070 Ti and RTX A-series: a newer kernel by default.** In our tests on rented cards at their own
+  power limits: RTX 3060 (12 GB) +6.6% (170 W); RTX 3060 Ti +8.0%, then +1.9% more on 0.1.8's newest kernel (200 W); RTX 3070
+  +5.4% (220 W, a card whose clock was free); RTX 3070 Ti +4.4%, then +1.5% (310 W); RTX A4000 +12.9% (140 W); RTX A2000 12GB
+  +11.5% (70 W).
+- **Data-centre and workstation cards:** NVIDIA A2, A16 and A40 now use the new kernel by default (A16 +13.8% per GPU, A2
+  +8.5%, A40 +8.1%); the L4 is +23% and the L40S about +22%.
+- **Memory clock on NVIDIA RTX 30, 40 and 50 cards, set by itself.** Most of these cards need little memory speed for Pearl,
+  so with the memory at 810 MHz the watts it no longer draws go to the chip. The first time a card mines with this version
+  (and after a driver update, or when its kernel changes), a check of under two minutes compares its own speed at
+  its normal memory clock and at 810 MHz at the same power limit, and keeps 810 MHz only if the card is not slower there by
+  more than the measurement's noise. On rented cards at their own power limits it kept 810 MHz on the RTX 3080 (+1.5 to +2.6%,
+  two cards), RTX 3090 (+3.1%), RTX 4070 Ti SUPER (+0.3%) and, within its noise and with less power, the RTX 5060 Ti, 5070 and
+  5090; an RTX 4060 Ti sits at the edge at its 165 W limit (kept once, not kept once). In the miner's own bench, every share
+  checked, at the card's default power limit and at a lower one: RTX 3080 +1.6% (370 W) and +4.8% (280 W), RTX 3090 +2.8% (390
+  W) and +8.9% (280 W), RTX 4060 Ti +0.5% (165 W) and +3.3% (130 W), RTX 4070 Ti SUPER +0.2% (295 W) and +1.1% (230 W), RTX
+  4090 +0.8% (450 W) and +2.5% (350 W), RTX 5060 Ti -0.4% (180 W, 4.0% less power) and -0.7% (150 W, 3.8% less power), RTX
+  5070 -0.4% (250 W, 3.7% less power) and +0.4% (190 W), RTX 5090 -0.2% (575 W, 1.6% less power) and +1.3% (450 W). The RTX
+  3060, 3060 Ti and 3070 mined about 94 to 95% slower at 810 MHz on their old kernel; on their new one the check measures
+  again. Off in Settings
+  ("Lower the memory speed on RTX 30/40/50 cards") or with `--mem-clock stock`. On HiveOS and mmpOS a memory clock lock or
+  offset the rig OS set before DynoHash starts is left as it was set (by `mine` and `dynohash tune`). A memory clock lock set
+  by anything else while DynoHash mines may be reset when it stops. On Windows the
+  DynoHash helper sets it: a test build ran on one Windows PC with a real RTX card; there the memory check kept the card's
+  normal clock, and mining while holding 810 MHz has not yet run on Windows. RTX 20, GTX, CMP and data-centre cards never get the automatic 810 MHz (on data-centre Ampere cards a dyno pull still
+  tries memory clocks, as before). The memory goes back to normal when DynoHash stops (after a crash or a forced stop: at the
+  next start or with `dynohash restore`; on Windows the helper also gives it back). A normal stop gives it back while the card
+  still works; after a forced stop, or a stop before mining had started, a card that sits at 810 MHz at idle by itself (some
+  desktop cards do) reads the same as held, so DynoHash says in one line that the give-back is not confirmed yet (not an
+  error; the next start or the next time the card mines settles it).
+- **Your own card settings come back.** If a card has a power limit or a clock / voltage offset that you set yourself in
+  another tool, DynoHash now writes it down before it changes anything, says so in the log ("GPU 0: your own setting (power
+  limit 378.00 W (105%)) is kept on record; DynoHash uses its own while it mines and puts yours back when it stops"), and
+  puts it back when it stops: after Stop, Ctrl+C or a dyno pull. After a crash or a force-quit `dynohash restore` puts it
+  back at once (the app runs it right away); a new start takes the card again and puts your setting back when that run stops.
+  Before, the card was left at stock and you had to set it again. DynoHash still tunes from stock while it has the card, and
+  the last line of a run or a pull ("cards are back ...") is now printed only after every card was read again. Two limits: a
+  clock offset above +250 MHz, or a negative one, is not put back (DynoHash never sets one and tells you at the start); your
+  power limit still is. And a power limit within half a percent of the card's default counts as the default. `dynohash
+  restore` now leaves a card alone that DynoHash did not set; `dynohash restore --stock` puts every card at stock. A card
+  that still carries DynoHash's own mark from a run that was force-quit (a fan floor it held, its memory clock hold) goes to
+  stock: what is on it is DynoHash's leftover, not yours. Closing the miner's console window on Windows (or logging off)
+  gives DynoHash about 4 seconds to put the cards back; when that is not enough it counts as a force-quit. On Windows this
+  needs this version's DynoHash helper: reinstall DynoHash. With an older helper still installed DynoHash tells you at the
+  start that your setting will NOT be put back. Installing or updating DynoHash puts every NVIDIA card to stock once (the
+  helper restarts): set your own setting again after an install. After updating from an older version that was force-quit,
+  restart the computer or run `dynohash restore --stock` once: a tune that version left on a card can otherwise be taken for
+  your own setting. Confirmed on a real card so far: an NVIDIA card under Linux. The Windows path (through the helper) and
+  AMD cards are covered by tests only and are not yet confirmed on a real card.
+- **Stop works at once, and kernels are no longer lost.** In earlier versions a Stop during the start-up kernel test was not
+  heard: the app ended the miner after 30 seconds, and the kernel being tested was left out on that card for good. 0.1.8 has
+  no start-up kernel test, a Stop during a dyno pull ends it at once and mining stays stopped, and kernels that were left out
+  the old way no longer matter: each card simply runs its one kernel. The app's own watchdog no longer restarts a miner in the
+  middle of its start.
+- **The PC stays awake while mining** and during a dyno pull (a sleep dropped the pool connection); on Linux it holds the
+  system's sleep lock (a desktop's own automatic suspend has not been tried yet). Only sleep is blocked, so the screen still turns off and locks. Turn off "Keep this PC awake while mining" in Settings, or use
+  `--allow-sleep` / `DYNO_ALLOW_SLEEP=1`, to let it sleep. A Linux service needs a small polkit rule (in the README.md that
+  comes with the download).
+- **Rigs (HiveOS, mmpOS):** to update, set the miner's Installation URL to the versioned link of the release
+  (`.../releases/download/v0.1.8/dynohash-0.1.8.tar.gz`, or `dynohash-mmpos-0.1.8.tgz`) and apply; the fixed-name link does
+  not update a rig.
+- **TH per watt:** on the app's Run screen, at the end of the miner's status line (`| 238 W, 0.308 TH/W (1m speed)`), and in
+  one line per card every 5 minutes. Only measured watts are used, never a guess.
+- **Less system memory with the new kernels:** about 0.2 to 0.3 GB per card while mining (0.1.6: about 0.4 GB), with no
+  rise at a job change.
+- **Honest bench numbers:** `bench` and the dyno pull count exactly the passes they time. Older versions
+  counted one pass more, up to about 7% high on slow cards (under 1% on most), so a 0.1.8 bench can read a little lower
+  than an older one while the card mines as fast or faster. Pool speeds were always right.
+- **`--os-oc` never runs a card above the rig's own power limit, to the watt**, also under the card's lowest percent step.
+- The log, `bench` and `selftest-point` name the build; `bench` prints the work size the card ran.
+
 ## 0.1.6 (2026-11-11)
 
 - **NOCK on Rellik Pool now pays.** 0.1.5 earned Pearl there but no NOCK, because that pool credits NOCK only for its own
