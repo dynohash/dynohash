@@ -103,11 +103,11 @@ Make a flight sheet. Pick **Custom** as the miner, then **Setup Miner Config**:
 - **Wallet and worker template:** `%WAL%.%WORKER_NAME%`
 - **Pool URL:** `stratum+ssl://prl-us.kryptex.network:8048`
 - **Pass:** only if your pool wants one.
-
-Tested pools: Kryptex, HeroMiners, K1Pool, 2Miners, AlphaPool, PearlFortune, LuckyPool, JetskiPool, Minerlab, Rabid Pool, Linkrra, Skypool, Suprnova and Rellik Pool. Addresses and copy-ready settings: [dynohash.com/download/#pools](https://dynohash.com/download/#pools).
 - **Extra config arguments:** optional, see [below](#extra-arguments-for-rigs).
 
 Your wallet goes into a private file on the rig, never onto the command line.
+
+Tested pools: Kryptex, F2Pool, HeroMiners, K1Pool, 2Miners, AlphaPool, PearlFortune, LuckyPool, JetskiPool, Minerlab, Rabid Pool, Linkrra, Skypool, Suprnova and Rellik Pool. Addresses and copy-ready settings: [dynohash.com/download/#pools](https://dynohash.com/download/#pools).
 
 ### mmpOS
 
@@ -118,6 +118,22 @@ Add a custom miner to a miner profile:
 - **Pool:** `prl-us.kryptex.network:8048`, with TLS on
 - **User:** `YOUR_WALLET.worker`
 - **Extra arguments:** optional, see [below](#extra-arguments-for-rigs).
+
+### F2Pool
+
+F2Pool logs in with your F2Pool account name, not a wallet address. It pays to the PRL address set in your F2Pool account.
+
+```sh
+./dynohash mine \
+  --pool stratum+tcp://pearl.f2pool.com:5500 \
+  --wallet ACCOUNTNAME \
+  --worker WORKERNAME
+```
+
+- DynoHash logs in as `ACCOUNTNAME.WORKERNAME`. Put only the account name in `--wallet`.
+- **Windows command line:** the same options go in `start-example.bat`.
+- **App:** choose **F2Pool** and type your F2Pool account name.
+- **HiveOS:** Wallet = your F2Pool account name, template `%WAL%.%WORKER_NAME%`, Pool URL `stratum+tcp://pearl.f2pool.com:5500`, no password.
 
 ### Extra arguments for rigs
 
