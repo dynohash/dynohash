@@ -3,6 +3,29 @@
 Every release is listed here, newest first.
 Downloads are in the [README](README.md#download) and on the [releases page](https://github.com/dynohash/dynohash/releases).
 
+## 0.1.9 (2026-11-19)
+
+A fix release on top of 0.1.8.
+
+- **No card is locked out any more.** In 0.1.8, if the miner was ended hard (a power cut, a restart, a forced kill) twice
+  while a card was running its start-up self-test, DynoHash stopped starting that card at every later start, until an
+  update. That rule is gone. A card whose self-test fails, cannot open the card, or does not finish simply does not mine for
+  that run, one line in the log says why, and the next start tests it again. Cards that 0.1.8 had locked out mine again on
+  the first start of 0.1.9: the old record is removed by itself, and the log says so once.
+- **A lost card is called a lost card.** When the driver loses a card (for example one that drops off the bus), the log now
+  says that the driver lost the card and that a restart of the computer brings it back, instead of blaming DynoHash's kernel
+  or saying the card "is not stable at stock settings". The card check that DynoHash sends (when speed stats are on) gives
+  this case and a self-test that did not finish their own short codes, and it now carries the NVIDIA driver version
+  whenever the driver can report it, not only for cards DynoHash was tuning.
+- **HiveOS / mmpOS (`--os-oc`): DynoHash's own leftover settings are no longer taken for the rig's.** If a dyno pull or a
+  tuned run was ended hard, its power limit and clock offset could stay on a card, and a later start without tuning could
+  then make DynoHash treat them as the rig OS's own overclock and keep them. Now only a run that read and put back a card's
+  rig settings marks them as clean, so the next tuning start (or `dynohash restore`) puts such a leftover back.
+- The HiveOS start script's comment now says what it really does (it starts the miner as a child process; Hive's stop still
+  reaches it).
+- Crash logs and `dynohash diag-bundle` remove the computer name in more cases: also where it is written several times in a
+  row, or right next to other letters or digits.
+
 ## 0.1.8 (2026-11-15)
 
 0.1.8 also carries everything that was ready for 0.1.7, which was not released on its own.
